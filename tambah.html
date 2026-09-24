@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Event - Tambah Data</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-light">
+
+    <!-- Navigasi -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">Sistem Event & Workshop</a>
+            <div class="navbar-nav">
+                <a class="nav-link" href="index.html">Daftar Event</a>
+                <a class="nav-link active" href="tambah.html">Tambah Event</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Konten Utama -->
+    <div class="container mb-5">
+        <div class="custom-card shadow-sm">
+            <h2 class="h4 text-primary mb-4">Formulir Tambah Master Event</h2>
+
+            <form action="#" method="POST">
+                <!-- Judul Event -->
+                <div class="mb-3">
+                    <label for="judul_event" class="form-label font-weight-bold">Judul Event</label>
+                    <input type="text" class="form-control" id="judul_event" name="judul_event" placeholder="Masukkan judul event" required>
+                </div>
+
+                <!-- Deskripsi -->
+                <div class="mb-3">
+                    <label for="deskripsi" class="form-label">Deskripsi Event</label>
+                    <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3" placeholder="Masukkan deskripsi event" required></textarea>
+                </div>
+
+                <!-- Kategori -->
+                <div class="mb-3">
+                    <label for="kategori" class="form-label">Kategori Event</label>
+                    <select class="form-select" id="kategori" name="kategori" required>
+                        <option value="" selected disabled>-- Pilih Kategori --</option>
+                        <option value="Teknologi">Teknologi</option>
+                        <option value="Bisnis">Bisnis</option>
+                    </select>
+                </div>
+
+                <!-- Silabus -->
+                <div class="mb-3">
+                    <label for="silabus" class="form-label">Silabus Materi</label>
+                    <textarea class="form-control" id="silabus" name="silabus" rows="3" placeholder="Masukkan materi/silabus event" required></textarea>
+                </div>
+
+                <!-- Durasi Sesi -->
+                <div class="mb-3">
+                    <label for="durasi_sesi" class="form-label">Durasi Sesi (Menit)</label>
+                    <input type="number" class="form-control" id="durasi_sesi" name="durasi_sesi" placeholder="Contoh: 120" min="1" required>
+                </div>
+
+                <!-- Tombol Kirim & Batal -->
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary">Simpan Data</button>
+                    <a href="index.html" class="btn btn-secondary">Batal</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
