@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Tambah Pembicara</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">SpeakerHub</a>
+            <div class="navbar-nav">
+                <a class="nav-link" href="index.html">Daftar Pembicara</a>
+                <a class="nav-link active" href="tambah.html">Tambah Pembicara</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="box-konten">
+            
+            <h2 class="fw-bold" style="color: #7d2a5c; margin: 0;">Formulir Tambah Data Pembicara</h2>
+
+            <form action="#" method="POST">
+                
+                <div class="mb-4">
+                    <label for="nama_speaker" class="form-label">Nama Pembicara</label>
+                    <input type="text" class="form-control" id="nama_speaker" name="nama_speaker" required>
+                </div>
+
+                <div class="mb-4">
+                    <label for="keahlian" class="form-label">Profil Keahlian</label>
+                    <textarea class="form-control" id="keahlian" name="keahlian" rows="3" required></textarea>
+                </div>
+
+                <div class="mb-4">
+                    <label for="institusi" class="form-label">Riwayat Institusi</label>
+                    <input type="text" class="form-control" id="institusi" name="institusi" required>
+                </div>
+
+                <div class="mb-4">
+                    <label for="portofolio" class="form-label">Tautan Portofolio</label>
+                    <input type="url" class="form-control" id="portofolio" name="portofolio" required>
+                </div>
+
+                <button type="submit" class="btn btn-pink">Simpan</button>
+                <a href="index.html" class="btn btn-secondary">Batal</a>
+
+            </form>
+
+        </div>
+    </div>
+
+</body>
+</html>
