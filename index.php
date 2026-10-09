@@ -1,5 +1,5 @@
 <?php
-require 'koneksi.php'; 
+require 'koneksi.php';
 $result = mysqli_query($conn, "SELECT * FROM speaker");
 ?>
 <head>
@@ -49,7 +49,7 @@ $result = mysqli_query($conn, "SELECT * FROM speaker");
                     <tbody>
                         <?php
                         $no = 1;
-                        while ($row = mysqli_fetch_assoc($result)) { ?>
+                        while ($row = mysqli_fetch_assoc($result)) : ?>
                         <tr>
                             <td><?php echo $no++; ?></td>
                             <td><?php echo $row['nama_pembicara']; ?></td>
