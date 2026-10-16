@@ -1,63 +1,79 @@
 body {
-    background-color: #ffe2fe ;
-    color: #a4a4aa;
+    background-color: #f1f5f9;
+    color: #334155;
     font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
-.navbar-soft-pink {
-    background-color: #ffb6c1;
-    border-bottom: 2px solid #f2a6bf;
+.navbar-slate {
+    background-color: #1e293b;
+    border-bottom: 2px solid #334155;
 }
 
-.navbar-soft-pink .navbar-brand,
-.navbar-soft-pink .nav-link {
-    color: #5a3d46;
+.navbar-slate .navbar-brand,
+.navbar-slate .nav-link {
+    color: #f8fafc !important;
     font-weight: 600;
 }
 
-.custom-card-pink {
+.custom-card-slate {
     padding: 25px;
     margin-top: 20px;
     margin-bottom: 20px;
-    border: 2px solid #f2a6bf;
+    border: 1px solid #cbd5e1;
     border-radius: 12px;
     background-color: #ffffff;
-    box-shadow: 0 4px 12px rgba(242, 166, 191, 0.25);
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
 }
 
-table-container-pink {
+.table-container-slate {
     padding: 15px;
     margin-top: 15px;
-    border: 1px solid #f7d6e0;
+    border: 1px solid #e2e8f0;
     border-radius: 10px;
     background-color: #ffffff;
+    overflow: hidden;
 }
 
-/* Styling Header Tabel */
-.table-pink-head {
-    background-color: #f2a6bf;
+.table-slate-head,
+.table-slate-head th {
+    background-color: #334155;
     color: #ffffff;
+    border: none;
 }
 
-/* Custom Tombol Pink Soft */
-.btn-pink {
-    background-color: #f2a6bf;
+.btn-blue {
+    background-color: #3b82f6;
     color: #ffffff;
     border: none;
     font-weight: 600;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
 }
 
-.btn-pink:hover {
-    background-color: #e08ba6;
+.btn-blue:hover {
+    background-color: #2563eb;
     color: #ffffff;
 }
 
-.btn-outline-pink {
-    border: 1px solid #f2a6bf;
-    color: #d63384;
+.btn-outline-blue {
+    border: 1px solid #3b82f6;
+    color: #2563eb;
+    background-color: transparent;
+    font-weight: 500;
+    border-radius: 6px;
+    transition: all 0.2s ease;
 }
 
-.btn-outline-pink:hover {
-    background-color: #f2a6bf;
+.btn-outline-blue:hover {
+    background-color: #3b82f6;
     color: #ffffff;
+}
+
+.table-outlined-slate {
+    border: 1.5px solid #cbd5e1;
+}
+
+.table-outlined-slate th,
+.table-outlined-slate td {
+    border: 1px solid #e2e8f0;
 }
