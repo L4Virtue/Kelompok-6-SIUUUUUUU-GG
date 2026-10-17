@@ -1,0 +1,72 @@
+<?php
+include 'koneksi.php';
+
+if (isset($_POST['submit'])) {
+    $nama = $_POST['nama'];
+    $instansi = $_POST['instansi'];
+    $kontak = $_POST['kontak'];
+    $email = $_POST['email'];
+
+    $sql = "INSERT INTO peserta (nama, instansi, kontak, email) VALUES ('$nama', '$instansi', '$kontak', '$email')";
+    
+    if (mysqli_query($conn, $sql)) {
+        header("Location: index.php");
+        exit();
+    } else {
+        echo "Gagal menambah data: " . mysqli_error($conn);
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tambah Peserta Event</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div class="container mt-5" style="max-width: 600px;">
+    <div class="card shadow-sm">
+        <div class="card-header bg-success text-white">
+            <h4 class="mb-0">Formulir Tambah Peserta</h4>
+        </div>
+        <div class="card-body">
+            
+            <div id="notifikasi"></div>
+
+            <form action="tambah.php" method="POST">
+                <div class="mb-3">
+                    <label for="nama" class="form-label">Nama Peserta</label>
+                    <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan nama lengkap" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="instansi" class="form-label">Asal Instansi / Kampus</label>
+                    <input type="text" class="form-control" id="instansi" name="instansi" placeholder="Contoh: Telkom University" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="kontak" class="form-label">Nomor Kontak (WhatsApp)</label>
+                    <input type="tel" class="form-control" id="kontak" name="kontak" placeholder="08xxxxxxxxxx" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email Aktif</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="nama@email.com" required>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <a href="index.php" class="btn btn-secondary">Kembali ke Daftar</a>
+                    <button type="submit" name="submit" class="btn btn-success">Simpan Data</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
