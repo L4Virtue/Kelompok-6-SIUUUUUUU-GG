@@ -7,7 +7,8 @@ if (isset($_GET['hapus'])) {
     $sqlDelete = "DELETE FROM peserta WHERE id = '$id'";
     
     if (mysqli_query($conn, $sqlDelete)) {
-        header("Location: index.php");
+        // PERHATIKAN: Ganti 'index.php' dengan 'indeks.php' jika nama file aslimu pakai 'ks'
+        header("Location: index.php"); 
         exit();
     } else {
         echo "Gagal menghapus data: " . mysqli_error($conn);
@@ -27,14 +28,14 @@ if (!$result) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Daftar Peserta & Biodata Event </title>
+    <title>Daftar Peserta & Biodata Event</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-light">
 
 <div class="container mt-5">
-    <h1> Selamat Datang di website Event & Workshop </h1>
-    <p> Berikut adalah data data dari peserta </p>
+    <h1>Selamat Datang di Website Event & Workshop</h1>
+    <p class="text-muted">Berikut adalah data-data dari peserta.</p>
 
     <div class="card shadow-sm">
         <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
@@ -67,6 +68,10 @@ if (!$result) {
                             <td><?= $row['kontak']; ?></td>
                             <td><?= $row['email']; ?></td>
                             <td class="text-center">
+                                <!-- Tombol Edit -->
+                                <a href="edit.php?id=<?= $row['id']; ?>" class="btn btn-warning btn-sm me-1">Edit</a>
+                                
+                                <!-- Tombol Hapus (Pastikan nama file di link href sama persis dengan nama file aslimu) -->
                                 <a href="index.php?hapus=<?= $row['id']; ?>" 
                                    class="btn btn-danger btn-sm" 
                                    onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Hapus</a>
