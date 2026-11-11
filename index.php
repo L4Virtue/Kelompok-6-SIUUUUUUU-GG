@@ -2,7 +2,7 @@
 // Hubungin ke file koneksi database
 include 'koneksi.php';
 
-//buat ngambil data event dari database
+// Buat ngambil data event dari database
 $query = "SELECT * FROM events ORDER BY id DESC"; 
 $result = mysqli_query($koneksi, $query);
 ?>
@@ -13,7 +13,7 @@ $result = mysqli_query($koneksi, $query);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Master Event - Daftar Data</title>
     
-    <!-- Bootstrap 5 CSS -->
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     
     <!-- Custom CSS -->
@@ -25,9 +25,11 @@ $result = mysqli_query($koneksi, $query);
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
         <div class="container">
             <a class="navbar-brand fw-bold" href="#">Sistem Event & Workshop</a>
-            <div class="navbar-nav">
+            <div class="navbar-nav align-items-center">
                 <a class="nav-link active" href="index.php">Daftar Event</a>
                 <a class="nav-link" href="tambah.php">Tambah Event</a>
+                <!-- Tombol Logout -->
+                <a href="http://127.0.0.1:8000/logout" class="btn btn-danger btn-sm ms-3" onclick="return confirm('Apakah Anda yakin ingin keluar?')">Logout</a>
             </div>
         </div>
     </nav>
