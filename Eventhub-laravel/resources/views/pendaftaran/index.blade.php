@@ -18,7 +18,7 @@
                 {{-- Jika sudah login, tampilkan info user & tombol logout --}}
                 <form action="{{ route('logout') }}" method="POST" class="d-inline">
                     @csrf
-                    <span class="text-white me-2">Halo, <strong>{{ Auth::user()->username }}</strong></span>
+                    <span class="text-white me-2">Halo, <strong>{{ Auth::user()->username }}</strong> ({{ Auth::user()->role }})</span>
                     <button type="submit" class="btn btn-light btn-sm fw-bold text-danger">Logout</button>
                 </form>
             @else
@@ -33,10 +33,17 @@
     <h1>Selamat Datang di Website Event & Workshop</h1>
     <p class="text-muted">Berikut adalah data-data dari peserta.</p>
 
-    {{-- Pesan Notifikasi Sukses --}}
+    {{-- Pesan Notifikasi Sukses / Error --}}
     @if(session('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+    @if(session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ session('error') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
@@ -45,10 +52,8 @@
         <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center py-3">
             <h4 class="mb-0 fs-5 fw-bold">Daftar Peserta Event & Workshop</h4>
             
-            {{-- Tombol Tambah Peserta hanya muncul jika sudah login (opsional) atau dibebaskan --}}
-            @auth
-                <a href="{{ route('pendaftaran.tambah') }}" class="btn btn-light btn-sm fw-bold text-primary">+ Tambah Peserta</a>
-            @endauth
+            {{-- Tombol Tambah Peserta bisa diakses siapa saja (Pengunjung & Admin) --}}
+            <a href="{{ route('pendaftaran.tambah') }}" class="btn btn-light btn-sm fw-bold text-primary">+ Tambah Peserta</a>
         </div>
         
         <div class="card-body">
@@ -61,9 +66,10 @@
                             <th>Asal Instansi/Kampus</th>
                             <th>Nomor Kontak</th>
                             <th>Email Aktif</th>
-                            @auth
+                            {{-- Kolom Aksi hanya muncul jika user memiliki izin update/delete (Admin) --}}
+                            @can('update', App\Models\Pendaftaran::class)
                                 <th class="text-center">Aksi</th>
-                            @endauth
+                            @endcan
                         </tr>
                     </thead>
                     <tbody>
@@ -75,23 +81,28 @@
                             <td>{{ $row->nomor_kontak }}</td>
                             <td>{{ $row->email_aktif }}</td>
                             
-                            @auth
+                            {{-- Tombol Edit & Hapus menggunakan @can Policy per baris data --}}
+                            @if(auth()->check() && auth()->user()->role === 'admin')
                             <td class="text-center">
                                 <!-- Tombol Edit -->
-                                <a href="{{ route('pendaftaran.edit', $row->id) }}" class="btn btn-warning btn-sm me-1">Edit</a>
+                                @can('update', $row)
+                                    <a href="{{ route('pendaftaran.edit', $row->id) }}" class="btn btn-warning btn-sm me-1">Edit</a>
+                                @endcan
                                 
                                 <!-- Tombol Hapus -->
-                                <form action="{{ route('pendaftaran.destroy', $row->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
-                                </form>
+                                @can('delete', $row)
+                                    <form action="{{ route('pendaftaran.destroy', $row->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                                    </form>
+                                @endcan
                             </td>
-                            @endauth
+                            @endif
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="{{ Auth::check() ? 6 : 5 }}" class="text-center text-muted py-4">Belum ada data peserta.</td>
+                            <td colspan="{{ (auth()->check() && auth()->user()->role === 'admin') ? 6 : 5 }}" class="text-center text-muted py-4">Belum ada data peserta.</td>
                         </tr>
                         @endforelse
                     </tbody>    

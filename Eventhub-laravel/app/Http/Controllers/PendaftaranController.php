@@ -39,17 +39,37 @@ class PendaftaranController extends Controller
         // Redirect kembali ke halaman daftar dengan pesan sukses
         return redirect()->route('pendaftaran.daftar')->with('success', 'Data peserta berhasil ditambahkan!');
     }
+
+    /**
+     * Menampilkan form edit data peserta.
+     */
+    public function edit(Pendaftaran $pendaftaran)
+    {
+        // Pengecekan Hak Akses: Tolak jika bukan admin
+        if (auth()->check() && auth()->user()->role !== 'admin') {
+            return redirect()->route('pendaftaran.daftar')->with('error', 'Akses ditolak! Hanya admin yang dapat mengedit data.');
+        }
+
+        return view('pendaftaran.edit', compact('pendaftaran'));
+    }
+
+    /**
+     * Memproses pembaruan data peserta ke database.
+     */
     public function update(Request $request, Pendaftaran $pendaftaran)
     {
-        // Validasi inputan sesuai kolom database
+        // Pengecekan Hak Akses: Tolak jika bukan admin
+        if (auth()->check() && auth()->user()->role !== 'admin') {
+            return redirect()->route('pendaftaran.daftar')->with('error', 'Akses ditolak! Hanya admin yang dapat mengubah data.');
+        }
+
         $request->validate([
-            'nama_peserta'    => 'required|max:100',
-            'instansi_kampus' => 'required|max:100',
-            'nomor_kontak'    => 'required|max:20',
-            'email_aktif'     => 'required|email|max:100',
+            'nama_peserta'    => 'required|string|max:255',
+            'instansi_kampus' => 'required|string|max:255',
+            'nomor_kontak'    => 'required|string|max:20',
+            'email_aktif'     => 'required|email|max:255',
         ]);
 
-        // Melakukan update data
         $pendaftaran->update([
             'nama_peserta'    => $request->nama_peserta,
             'instansi_kampus' => $request->instansi_kampus,
@@ -60,8 +80,16 @@ class PendaftaranController extends Controller
         return redirect()->route('pendaftaran.daftar')->with('success', 'Data peserta berhasil diperbarui!');
     }
 
+    /**
+     * Menghapus data peserta dari database.
+     */
     public function destroy(Pendaftaran $pendaftaran)
     {
+        // Pengecekan Hak Akses: Tolak jika bukan admin
+        if (auth()->check() && auth()->user()->role !== 'admin') {
+            return redirect()->route('pendaftaran.daftar')->with('error', 'Akses ditolak! Hanya admin yang dapat menghapus data.');
+        }
+
         // Menghapus data dari database menggunakan Eloquent
         $pendaftaran->delete();
 

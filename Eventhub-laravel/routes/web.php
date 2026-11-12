@@ -20,29 +20,33 @@ Route::get('/tes-koneksi', function () {
     }
 })->withoutMiddleware('web');
 
-// Rute untuk Manajemen Pendaftaran Peserta
+// ==========================================
+// 1. RUTE PUBLIK (Bisa diakses siapa saja / Tamu & Pengunjung)
+// ==========================================
 Route::get('/daftar-biodata', [PendaftaranController::class, 'daftar'])->name('pendaftaran.daftar');
 Route::get('/daftar-biodata/tambah', [PendaftaranController::class, 'tambah'])->name('pendaftaran.tambah');
 Route::post('/daftar-biodata', [PendaftaranController::class, 'store'])->name('pendaftaran.store');
 
-Route::get('/daftar-biodata/{pendaftaran}/edit', [PendaftaranController::class, 'edit'])->name('pendaftaran.edit');
-Route::put('/daftar-biodata/{pendaftaran}', [PendaftaranController::class, 'update'])->name('pendaftaran.update');
+// ==========================================
+// 2. RUTE GUEST (Hanya untuk yang BELUM login)
+// ==========================================
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+    Route::post('/login', [AuthController::class, 'login'])->name('login.proses');
+});
 
-Route::delete('/daftar-biodata/{pendaftaran}', [PendaftaranController::class, 'destroy'])->name('pendaftaran.destroy');
-
-Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-Route::post('/login', [AuthController::class, 'login'])->name('login.proses');
-
-// Rute Autentikasi Login & Logout
-Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-Route::post('/login', [AuthController::class, 'login'])->name('login.proses');
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-
-// Rute CRUD yang Membutuhkan Login (Middleware Auth)
+// ==========================================
+// 3. RUTE AUTH & ROLE (Khusus yang SUDAH login)
+// ==========================================
 Route::middleware('auth')->group(function () {
-    Route::get('/daftar-biodata/tambah', [PendaftaranController::class, 'tambah'])->name('pendaftaran.tambah');
-    Route::post('/daftar-biodata', [PendaftaranController::class, 'store'])->name('pendaftaran.store');
-    Route::get('/daftar-biodata/{pendaftaran}/edit', [PendaftaranController::class, 'edit'])->name('pendaftaran.edit');
-    Route::put('/daftar-biodata/{pendaftaran}', [PendaftaranController::class, 'update'])->name('pendaftaran.update');
-    Route::delete('/daftar-biodata/{pendaftaran}', [PendaftaranController::class, 'destroy'])->name('pendaftaran.destroy');
+    // Tombol Logout untuk semua user yang sudah login
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+    // Khusus ADMIN (Dibatasi menggunakan middleware role yang sudah dibuat di Langkah 3)
+    // Pengunjung (role 'user') otomatis ditolak (Error 403) jika mencoba mengakses rute ini
+    Route::middleware('role:admin')->group(function () {
+        Route::get('/daftar-biodata/{pendaftaran}/edit', [PendaftaranController::class, 'edit'])->name('pendaftaran.edit');
+        Route::put('/daftar-biodata/{pendaftaran}', [PendaftaranController::class, 'update'])->name('pendaftaran.update');
+        Route::delete('/daftar-biodata/{pendaftaran}', [PendaftaranController::class, 'destroy'])->name('pendaftaran.destroy');
+    });
 });

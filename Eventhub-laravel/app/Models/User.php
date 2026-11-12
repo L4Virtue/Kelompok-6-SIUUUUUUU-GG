@@ -9,13 +9,12 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
     protected $fillable = [
         'username',
         'password',
-        'role',
+        'role', // Pastikan 'role' sudah ada di sini[cite: 7]
     ];
 
     protected $hidden = [
@@ -28,5 +27,13 @@ class User extends Authenticatable
         return [
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * Method hasRole untuk memeriksa peran user (Sesuai Langkah 2.2 Modul Tugas)[cite: 7]
+     */
+    public function hasRole(...$roles): bool
+    {
+        return in_array($this->role, $roles, true);
     }
 }
