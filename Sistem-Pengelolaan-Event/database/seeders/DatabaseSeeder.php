@@ -17,5 +17,14 @@ class DatabaseSeeder extends Seeder
                 'role' => 'admin',
             ]
         );
+
+        User::firstOrCreate(
+            ['username' => 'petugas'],
+            [
+                'password' => Hash::make('petugas123'),
+                'role' => 'petugas',
+            ]
+        );
+        
     }
 }

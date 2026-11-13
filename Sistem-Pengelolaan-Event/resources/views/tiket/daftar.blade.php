@@ -88,11 +88,14 @@
 
                         @auth
                             <td>
-                                <a href="{{ route('tiket.edit', $item->id) }}"
-                                   class="btn btn-warning btn-sm">
-                                    Edit
-                                </a>
-
+                                @can('update', $item)
+                                    <a href="{{ route('tiket.edit', $item->id) }}"
+                                       class="btn btn-warning btn-sm">
+                                        Edit
+                                    </a>
+                                @endcan
+                                @can('hapus-tiket')
+                                 @can('delete', $item)
                                 <form
                                     action="{{ route('tiket.destroy', $item->id) }}"
                                     method="POST"
@@ -106,6 +109,8 @@
                                         Hapus
                                     </button>
                                 </form>
+                                 @endcan
+                                @endcan
                             </td>
                         @endauth
                     </tr>

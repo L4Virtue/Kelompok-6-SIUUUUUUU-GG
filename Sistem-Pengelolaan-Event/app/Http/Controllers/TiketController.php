@@ -37,10 +37,8 @@ class TiketController extends Controller
             ->with('success', 'Data tiket berhasil ditambahkan.');
     }
     
-    public function edit($id)
+    public function edit(Tiket $tiket)
     {
-        $tiket = Tiket::findOrFail($id);
-
         return view('tiket.edit', compact('tiket'));
     }
 
@@ -55,6 +53,8 @@ class TiketController extends Controller
 
         $tiket = Tiket::findOrFail($id);
 
+        abort_unless($request->user()->can('update', $tiket), 403);
+
         $tiket->update($data);
 
         return redirect()
@@ -65,6 +65,8 @@ class TiketController extends Controller
     public function destroy($id)
     {
         $tiket = Tiket::findOrFail($id);
+
+        abort_unless(request()->user()->can('delete', $tiket), 403);
 
         $tiket->delete();
 
