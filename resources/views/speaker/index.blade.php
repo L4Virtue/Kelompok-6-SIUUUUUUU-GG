@@ -43,12 +43,14 @@
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('speaker.index') ? 'active' : '' }}" href="{{ route('speaker.index') }}">Daftar Pembicara</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('speaker.create') ? 'active' : '' }}" href="{{ route('speaker.create') }}">Tambah Pembicara</a>
-                    </li>
+                    @can('kelola-speaker')
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('speaker.create') ? 'active' : '' }}" href="{{ route('speaker.create') }}">Tambah Pembicara</a>
+                        </li>
+                    @endcan
                 </ul>
 
-                <!-- Menu Login / Logout di Kanan Navbar (Sesuai Slide Modul) -->
+                <!-- Menu Login / Logout di Kanan Navbar -->
                 <ul class="navbar-nav ms-auto">
                     @auth
                         <li class="nav-item">
@@ -82,7 +84,9 @@
             
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h2 class="fw-bold" style="color: #1e293b; margin: 0;">Daftar Pembicara / Speaker</h2>
-                <a href="{{ route('speaker.create') }}" class="btn btn-blue px-3 py-2 fw-semibold">+ Tambah Pembicara</a>
+                @can('kelola-speaker')
+                    <a href="{{ route('speaker.create') }}" class="btn btn-blue px-3 py-2 fw-semibold">+ Tambah Pembicara</a>
+                @endcan
             </div>
 
             <div class="table-responsive">
@@ -117,13 +121,17 @@
 
                             @auth
                             <td>
-                                <a href="{{ route('speaker.edit', $item->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                                @can('update', $item)
+                                    <a href="{{ route('speaker.edit', $item) }}" class="btn btn-sm btn-warning">Edit</a>
+                                @endcan
 
-                                <form action="{{ route('speaker.destroy', $item->id) }}" method="POST" class="d-inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus pembicara ini?')">Hapus</button>
-                                </form>
+                                @can('delete', $item)
+                                    <form action="{{ route('speaker.destroy', $item) }}" method="POST" class="d-inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus pembicara ini?')">Hapus</button>
+                                    </form>
+                                @endcan
                             </td>
                             @endauth
                         </tr>

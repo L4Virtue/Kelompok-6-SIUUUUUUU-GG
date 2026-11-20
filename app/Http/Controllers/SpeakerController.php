@@ -32,30 +32,27 @@ class SpeakerController extends Controller
         return redirect('/daftar-speaker')->with('success', 'Data pembicara berhasil ditambahkan!');
     }
 
-    public function edit($id)
+    public function edit(Speaker $speaker)
     {
-        $speaker = Speaker::findOrFail($id);
         return view('speaker.edit', compact('speaker'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Speaker $speaker)
     {
-        $request->validate([
+        $validatedData = $request->validate([
             'nama_pembicara' => 'required|max:100',
             'keahlian'       => 'required|max:50',
             'institusi'      => 'required|max:100',
             'portofolio'     => 'nullable|url',
         ]);
 
-        $speaker = Speaker::findOrFail($id);
-        $speaker->update($request->all());
+        $speaker->update($validatedData);
 
         return redirect('/daftar-speaker')->with('success', 'Data pembicara berhasil diperbarui!');
     }
 
-    public function destroy($id)
+    public function destroy(Speaker $speaker)
     {
-        $speaker = Speaker::findOrFail($id);
         $speaker->delete();
 
         return redirect('/daftar-speaker')->with('success', 'Data pembicara berhasil dihapus!');
